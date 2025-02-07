@@ -1,23 +1,57 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Login from '../components/Login.vue'
+import Dev from '../components/DeveloperDashaboard.vue'
+import Manage from '../components/ManagerDashboard.vue'
+import user from '../components/User.vue'
+import Register from '../components/Registration.vue'
+import fourofour from '../components/404page.vue'
+
+
 
 Vue.use(VueRouter)
 
 const routes = [
+
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path : '/',
+    name : 'login',
+    component : Login
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path : '/registration',
+    name : 'registration',
+    component : Register,
+    meta: { requiresAuth: true, roles: ['user','developer','manager'] },
+  },
+  {
+    path : '/developer',
+    name : 'developer',
+    component : Dev,
+    meta: { requiresAuth: true, roles: ['developer'] },
+    
+  },
+  {
+    path : '/manager',
+    name : 'manager',
+    component : Manage,
+    meta: { requiresAuth: true, roles: ['manager'] },
+   
+  },
+  {
+    path : '/user',
+    name : 'user',
+    component : user,
+    meta: {requiresAuth: true,role: ['user'],
+    },
+   
+  },
+  {
+     path : '/fourofour',
+     name : 'fourofour',
+     component : fourofour
   }
+ 
 ]
 
 const router = new VueRouter({
@@ -25,5 +59,9 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+
+
+
 
 export default router
